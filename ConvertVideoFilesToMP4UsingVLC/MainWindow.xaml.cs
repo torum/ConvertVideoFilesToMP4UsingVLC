@@ -1,24 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ConvertVideoFilesToMP4UsingVLC
 {
     /// <summary>
-    /// Convert Video Files To MP4 Using VLC:
-    /// 
-    /// 
+    /// Convert Video Files To MP4 Using VLC
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -45,7 +33,6 @@ namespace ConvertVideoFilesToMP4UsingVLC
             consoleTextBox.AppendText("  (a) Drag and Drop video files here" + Environment.NewLine);
             consoleTextBox.AppendText("  (b) Create a shortcut file of this exe file and place it to \"SendTo\" folder." + Environment.NewLine);
             consoleTextBox.AppendText("      You can just type \"shell:sendto\" in the Windows Explorer's address bar to open the foloder." + Environment.NewLine);
-
             consoleTextBox.AppendText("#########################################################################################" + Environment.NewLine);
             consoleTextBox.AppendText(Environment.NewLine + Environment.NewLine);
 
@@ -58,7 +45,9 @@ namespace ConvertVideoFilesToMP4UsingVLC
                 }
                 else
                 {
-                    statusBarMessage.Text = string.Format("VLC could not be found at {0}", vlcPath);
+                    statusBarMessage.Text = "No VLC?";
+
+                    statusBarErrorMessage.Text = string.Format("VLC could not be found at {0}", vlcPath);
 
                     consoleTextBox.AppendText(string.Format("Error: VLC could not be found at {0}", vlcPath) + Environment.NewLine);
 
@@ -224,7 +213,6 @@ namespace ConvertVideoFilesToMP4UsingVLC
 
                     return;
                 }
-
             }
         }
     }
