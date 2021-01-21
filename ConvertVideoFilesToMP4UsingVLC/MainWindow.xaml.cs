@@ -11,7 +11,7 @@ namespace ConvertVideoFilesToMP4UsingVLC
     public partial class MainWindow : Window
     {
         const string appName = "ConvertVideoFilesToMP4UsingVLC";
-        const string appVer = "0.0.1";
+        const string appVer = "0.0.1.1";
         private string vlcPath = "C:\\Program Files\\VideoLAN\\VLC\\vlc.exe";
         private string vlcPathDoubleQuoted = "\"C:\\Program Files\\VideoLAN\\VLC\\vlc.exe\"";
         private string[] files;
@@ -26,11 +26,11 @@ namespace ConvertVideoFilesToMP4UsingVLC
             consoleTextBox.AppendText("#########################################################################################" + Environment.NewLine);
             consoleTextBox.AppendText(string.Format("{0} - v{1}", appName, appVer) + Environment.NewLine);
             consoleTextBox.AppendText(Environment.NewLine);
-            consoleTextBox.AppendText("It's a fake! Yes, this is not a console (commandline) application. It's a GUI video batch converter." + Environment.NewLine);
+            consoleTextBox.AppendText("It's a fake! Yes, this is not a console (command-line) application. It's a GUI video batch converter." + Environment.NewLine);
             consoleTextBox.AppendText("This application takes video files such as AVI and converts to MP4 using VLC." + Environment.NewLine);
             consoleTextBox.AppendText(Environment.NewLine);
             consoleTextBox.AppendText("Usage:" + Environment.NewLine);
-            consoleTextBox.AppendText("  (a) Drag and Drop video files here" + Environment.NewLine);
+            consoleTextBox.AppendText("  (a) Drag and Drop video files here, or" + Environment.NewLine);
             consoleTextBox.AppendText("  (b) Create a shortcut file of this exe file and place it to \"SendTo\" folder." + Environment.NewLine);
             consoleTextBox.AppendText("      You can just type \"shell:sendto\" in the Windows Explorer's address bar to open the foloder." + Environment.NewLine);
             consoleTextBox.AppendText("#########################################################################################" + Environment.NewLine);
@@ -133,12 +133,15 @@ namespace ConvertVideoFilesToMP4UsingVLC
 
                 string newFilePath = System.IO.Path.ChangeExtension(filePath, ".mp4");
 
+                if (newFilePath == filePath)
+                    continue;
+
                 SetTextBoxText(string.Format(Environment.NewLine + "Processing {0}...", System.IO.Path.GetFileName(filePath)) + Environment.NewLine + Environment.NewLine);
 
                 try
                 {
                     var vlc = new System.Diagnostics.ProcessStartInfo();
-                    vlc.Arguments = vlcPathDoubleQuoted + " \"" + filePath + "\" " + "--sout=\"#transcode{acodec=mp4a,ab=128,channels=2,samplerate=44100,vcodec=h264,deinterlace}:duplicate{dst=std{access=file,mux=mp4,dst=" + newFilePath + "}}\"" + " " + "--play-and-exit\"";
+                    vlc.Arguments = vlcPathDoubleQuoted + " \"" + filePath + "\" " + "--sout=\"#transcode{acodec=mp4a,ab=128,channels=2,samplerate=44100,vcodec=h264,deinterlace}:duplicate{dst=std{access=file,mux=mp4,dst=" + newFilePath + "}}\"" + " " + "--no-loop --no-repeat --play-and-exit\"";
                     vlc.FileName = "vlc";
                     vlc.UseShellExecute = true;
 
